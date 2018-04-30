@@ -13,7 +13,6 @@ import net.corda.nodeapi.internal.crypto.X509Utilities
 import java.security.cert.X509Certificate
 import java.time.Instant
 
-
 const val NETWORK_PARAMS_FILE_NAME = "network-parameters"
 const val NETWORK_PARAMS_UPDATE_FILE_NAME = "network-parameters-update"
 
@@ -61,7 +60,6 @@ data class ParametersUpdate(
 /** Verify that a Network Map certificate is issued by Root CA and its [CertRole] is correct. */
 // TODO: Current implementation works under the assumption that there are no intermediate CAs between Root and
 //      Network Map. Consider a more flexible implementation without the above assumption.
-
 fun <T : Any> SignedDataWithCert<T>.verifiedNetworkMapCert(rootCert: X509Certificate): T {
     require(CertRole.extract(sig.by) == CertRole.NETWORK_MAP) { "Incorrect cert role: ${CertRole.extract(sig.by)}" }
     X509Utilities.validateCertificateChain(rootCert, sig.by, rootCert)
